@@ -2,4 +2,4 @@
 This repository illustrates the creation of "Virual keyboard", using vanilla js + scss + blank HTML file
 
 
-https://staceysych.github.io/codejam-virtual-keyboard/
+CHECK IT OUT ----->  https://staceysych.github.io/codejam-virtual-keyboard/
