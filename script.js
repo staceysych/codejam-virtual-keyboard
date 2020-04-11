@@ -220,39 +220,37 @@ const Keyboard = {
       } else {
         keyCodes = keyCodesRu;
       }
-
-      keyBoardKeys.forEach((key) => {
-        this.open(key.value, (currentValue) => {
-          key.value = currentValue;
+      //* if no key in keyCodes, do nothing
+      if(keyCodes.hasOwnProperty(keyCode)) {
+        keyBoardKeys.forEach((key) => {
+          this.open(key.value, (currentValue) => {
+            key.value = currentValue;
+          });
+  
+          if (key.innerHTML.toLowerCase() === keyCodes[keyCode].toLowerCase()) {
+            key.classList.add('keyboard__key_clicked');
+  
+            if (key.innerHTML === 'CapsLock') {
+              this.toggleCapsLock();
+              key.classList.toggle('keyboard__key_active');
+            }
+  
+            if (key.innerHTML === 'AltL' || key.innerHTML === 'AltR') {
+              this.properties.alt = true;
+              event.preventDefault();
+            }
+  
+            if (key.innerHTML === 'ShiftR' || key.innerHTML === 'ShiftL') {
+              this.properties.shift = true;
+            }
+          }
         });
-
-        if (key.innerHTML.toLowerCase() === keyCodes[keyCode].toLowerCase()) {
-          key.classList.add('keyboard__key_clicked');
-          // console.log('classAdded');
-
-          if (key.innerHTML === 'CapsLock') {
-            // console.log('pressed');
-            // console.log(key.innerHTML);
-            this.toggleCapsLock();
-            key.classList.toggle('keyboard__key_active');
-          }
-
-          if (key.innerHTML === 'AltL' || key.innerHTML === 'AltR') {
-            this.properties.alt = true;
-            event.preventDefault();
-            // console.log("alt:" + this.properties.alt)
-          }
-
-          if (key.innerHTML === 'ShiftR' || key.innerHTML === 'ShiftL') {
-            this.properties.shift = true;
-            // console.log("shift:" + this.properties.shift)
-          }
+  
+        if (this.properties.shift && this.properties.alt) {
+          this.changeLang();
         }
-      });
+      } 
 
-      if (this.properties.shift && this.properties.alt) {
-        this.changeLang();
-      }
     });
     // when we stop pressing button
     document.addEventListener('keyup', (event) => {
@@ -264,22 +262,24 @@ const Keyboard = {
       } else {
         keyCodes = keyCodesRu;
       }
-      keyBoardKeys.forEach((key) => {
-        if (key.innerHTML.toLowerCase() === keyCodes[keyCode].toLowerCase()) {
-          key.classList.remove('keyboard__key_clicked');
-        }
 
-        if (key.innerHTML === 'AltL' || key.innerHTML === 'AltR') {
-          this.properties.alt = false;
-          // event.preventDefault();
-          // console.log("keyUp alt:" + this.properties.alt)
-        }
+      //* if no key in keyCodes, do nothing
+      if(keyCodes.hasOwnProperty(keyCode)) {
+        keyBoardKeys.forEach((key) => {
+          if (key.innerHTML.toLowerCase() === keyCodes[keyCode].toLowerCase()) {
+            key.classList.remove('keyboard__key_clicked');
+          }
+  
+          if (key.innerHTML === 'AltL' || key.innerHTML === 'AltR') {
+            this.properties.alt = false;
+          }
+  
+          if (key.innerHTML === 'ShiftR' || key.innerHTML === 'ShiftL') {
+            this.properties.shift = false;
+          }
+        });
+      }
 
-        if (key.innerHTML === 'ShiftR' || key.innerHTML === 'ShiftL') {
-          this.properties.shift = false;
-          // console.log("key up shift:" + this.properties.shift)
-        }
-      });
     });
   },
 
