@@ -2,7 +2,6 @@ const Keyboard = {
   elements: {
     mainContainer: null,
     keysContainer: null,
-    keys: [],
     engKeys: ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', "'", 'Enter', 'ShiftLeft', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'Meta', 'AltL', ' ', 'AltR', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
     ruKeys: ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'ShiftLeft', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '/', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'Meta', 'AltL', ' ', 'AltR', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'],
   },
@@ -209,10 +208,10 @@ const Keyboard = {
       ControlRight: 'CtrlR',
     };
 
-    // when we press a button
-    document.addEventListener('keydown', (event) => {
+    // when we press a button 
+    //* + use destructuring
+    document.addEventListener('keydown', ({code}) => {
       this.myFocus();
-      const keyCode = event.code;
       let keyCodes;
 
       if (this.properties.langEng) {
@@ -221,13 +220,13 @@ const Keyboard = {
         keyCodes = keyCodesRu;
       }
       //* if no key in keyCodes, do nothing
-      if(keyCodes.hasOwnProperty(keyCode)) {
+      if(keyCodes.hasOwnProperty(code)) {
         keyBoardKeys.forEach((key) => {
           this.open(key.value, (currentValue) => {
             key.value = currentValue;
           });
   
-          if (key.innerHTML.toLowerCase() === keyCodes[keyCode].toLowerCase()) {
+          if (key.innerHTML.toLowerCase() === keyCodes[code].toLowerCase()) {
             key.classList.add('keyboard__key_clicked');
   
             if (key.innerHTML === 'CapsLock') {
@@ -242,7 +241,17 @@ const Keyboard = {
   
             if (key.innerHTML === 'ShiftR' || key.innerHTML === 'ShiftL') {
               this.properties.shift = true;
-            }
+            };
+            if(key.innerHTML === 'Tab') {
+              const area = document.querySelector('.textarea');
+              event.preventDefault();
+              //save position of cursor
+              let cursorPositionBeforChange = area.selectionStart;
+              //add tab to the cursor position in textarea.value
+              area.value = area.value.substring(0,area.selectionStart) + "\t" + area.value.substring(area.selectionEnd);
+              //set final position of the cursor by one character to the right
+              area.selectionEnd = cursorPositionBeforChange + 1; 
+              }
           }
         });
   
@@ -250,12 +259,12 @@ const Keyboard = {
           this.changeLang();
         }
       } 
+      console.log(this.properties.value)
 
     });
     // when we stop pressing button
-    document.addEventListener('keyup', (event) => {
+    document.addEventListener('keyup', ({code}) => {
       this.myFocus();
-      const keyCode = event.code;
       let keyCodes;
       if (this.properties.langEng) {
         keyCodes = keyCodesEng;
@@ -264,9 +273,9 @@ const Keyboard = {
       }
 
       //* if no key in keyCodes, do nothing
-      if(keyCodes.hasOwnProperty(keyCode)) {
+      if(keyCodes.hasOwnProperty(code)) {
         keyBoardKeys.forEach((key) => {
-          if (key.innerHTML.toLowerCase() === keyCodes[keyCode].toLowerCase()) {
+          if (key.innerHTML.toLowerCase() === keyCodes[code].toLowerCase()) {
             key.classList.remove('keyboard__key_clicked');
           }
   
