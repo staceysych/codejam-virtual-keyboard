@@ -212,7 +212,7 @@ const Keyboard = {
       const keyCodes = this.properties.langEng ? this.elements.keyCodesEng : this.elements.keyCodesRu;
 
       //* if no key in keyCodes, do nothing
-      if(keyCodes.hasOwnProperty(code)) {
+      if(Object.prototype.hasOwnProperty.call(keyCodes, code)) {
         keyBoardKeys.forEach((key) => {
           this.open(key.value, (currentValue) => {
             key.value = currentValue;
@@ -233,7 +233,7 @@ const Keyboard = {
   
             if (key.innerHTML === 'ShiftR' || key.innerHTML === 'ShiftL') {
               this.properties.shift = true;
-            };
+            }
 
             if(key.innerHTML === 'Tab') {
               const area = document.querySelector('.textarea');
@@ -257,15 +257,11 @@ const Keyboard = {
     // when we stop pressing button
     document.addEventListener('keyup', ({code}) => {
       this.myFocus();
-      let keyCodes;
-      if (this.properties.langEng) {
-        keyCodes = this.elements.keyCodesEng;
-      } else {
-        keyCodes = this.elements.keyCodesRu;
-      }
+      // Conditional operator short form
+      const keyCodes = this.properties.langEng ? this.elements.keyCodesEng : this.elements.keyCodesRu;
 
       //* if no key in keyCodes, do nothing
-      if(keyCodes.hasOwnProperty(code)) {
+      if(Object.prototype.hasOwnProperty.call(keyCodes, code)) {
         keyBoardKeys.forEach((key) => {
           if (key.innerHTML.toLowerCase() === keyCodes[code].toLowerCase()) {
             key.classList.remove('keyboard__key_clicked');
@@ -293,18 +289,11 @@ const Keyboard = {
   //* Create buttons
   createKeys() {
     const fragment = document.createDocumentFragment();
-    let keys;
-
-    if (this.properties.langEng) {
-      keys = this.elements.keyCodesEng;
-    } else {
-      keys = this.elements.keyCodesRu;
-    }
+    const keys = this.properties.langEng ? this.elements.keyCodesEng : this.elements.keyCodesRu;
 
     for (let code in keys) {
       let key = keys[code];
       
-    
       const keyButton = document.createElement('button');
 
       keyButton.setAttribute('type', 'button');
