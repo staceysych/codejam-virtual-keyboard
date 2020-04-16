@@ -14,8 +14,8 @@ const Keyboard = {
       Digit8: ['8', '8'],
       Digit9: ['9', '9'],
       Digit0: ['0', '0'],
-      Minus: ['-','-'],
-      Equal: ['=','='],
+      Minus: ['-', '-'],
+      Equal: ['=', '='],
       Backspace: ['Backspace', 'Backspace'],
       Tab: ['Tab', 'Tab'],
       KeyQ: ['q', 'й'],
@@ -41,10 +41,10 @@ const Keyboard = {
       KeyJ: ['j', 'о'],
       KeyK: ['k', 'л'],
       KeyL: ['l', 'д'],
-      Semicolon: [';','ж'],
-      Quote: ["'","э"],
-      Backslash: ['\\','\\'],
-      ShiftLeft: ['ShiftL','ShiftL'],
+      Semicolon: [';', 'ж'],
+      Quote: ["'", 'э'],
+      Backslash: ['\\', '\\'],
+      ShiftLeft: ['ShiftL', 'ShiftL'],
       KeyZ: ['z', 'я'],
       KeyX: ['x', 'ч'],
       KeyC: ['c', 'с'],
@@ -53,21 +53,21 @@ const Keyboard = {
       KeyN: ['n', 'т'],
       KeyM: ['m', 'ь'],
       Comma: [',', 'б'],
-      Period: ['.','ю'],
+      Period: ['.', 'ю'],
       Slash: ['/', '/'],
-      ArrowUp: ['▲','▲'],
+      ArrowUp: ['▲', '▲'],
       ShiftRight: ['ShiftR', 'ShiftR'],
       ControlLeft: ['CtrlL', 'CtrlL'],
-      MetaLeft: ['Win','Win'],
-      AltLeft: ['AltL','AltL'],
-      Space: ['',''],
+      MetaLeft: ['Win', 'Win'],
+      AltLeft: ['AltL', 'AltL'],
+      Space: ['', ''],
       AltRight: ['AltR', 'AltR'],
       ControlRight: ['CtrlR', 'CtrlR'],
       ArrowLeft: ['◄', '◄'],
       ArrowDown: ['▼', '▼'],
       ArrowRight: ['►', '►'],
-      
-    }
+
+    },
   },
 
   eventHandler: {
@@ -86,12 +86,11 @@ const Keyboard = {
 
   //* Save capsLock and lang after page reload.
   checkSessionStorage() {
-    let a = sessionStorage.getItem('properties');
+    const a = sessionStorage.getItem('properties');
     if (a != null) {
       this.properties.capsLock = JSON.parse(a).capsLock;
       this.properties.langEng = JSON.parse(a).langEng;
-    }   
-
+    }
   },
 
   init() {
@@ -137,16 +136,16 @@ const Keyboard = {
   keyDownAndUp() {
     const keyBoardKeys = document.querySelectorAll('.keyboard__key');
 
-    // when we press a button 
+    // when we press a button
     //* + use destructuring
-    document.addEventListener('keydown', ({code}) => {
+    document.addEventListener('keydown', ({ code }) => {
       this.myFocus();
-      
+
       const keyCodes = this.elements.allKeyCodes;
-      //conditional operator short form
+      // conditional operator short form
       const lang = this.properties.langEng ? 0 : 1;
       //* if no key in keyCodes, do nothing
-      if(Object.prototype.hasOwnProperty.call(keyCodes, code)) {
+      if (Object.prototype.hasOwnProperty.call(keyCodes, code)) {
         keyBoardKeys.forEach((key) => {
           this.open(key.value, (currentValue) => {
             key.value = currentValue;
@@ -154,64 +153,62 @@ const Keyboard = {
 
           if (key.innerHTML.toLowerCase() === keyCodes[code][lang].toLowerCase()) {
             key.classList.add('keyboard__key_clicked');
-  
+
             if (key.innerHTML === 'CapsLock') {
               this.toggleCapsLock();
               key.classList.toggle('keyboard__key_active');
             }
-  
+
             if (key.innerHTML === 'AltL' || key.innerHTML === 'AltR') {
               this.properties.alt = true;
               event.preventDefault();
             }
-  
+
             if (key.innerHTML === 'ShiftR' || key.innerHTML === 'ShiftL') {
               this.properties.shift = true;
             }
 
-            if(key.innerHTML === 'Tab') {
+            if (key.innerHTML === 'Tab') {
               const area = document.querySelector('.textarea');
               event.preventDefault();
-              //save position of cursor
-              let cursorPositionBeforChange = area.selectionStart;
-              //add tab to the cursor position in textarea.value
-              area.value = area.value.substring(0,area.selectionStart) + "\t" + area.value.substring(area.selectionEnd);
-              //set final position of the cursor by one character to the right
-              area.selectionEnd = cursorPositionBeforChange + 1; 
-              }
+              // save position of cursor
+              const cursorPositionBeforChange = area.selectionStart;
+              // add tab to the cursor position in textarea.value
+              area.value = `${area.value.substring(0, area.selectionStart)}\t${area.value.substring(area.selectionEnd)}`;
+              // set final position of the cursor by one character to the right
+              area.selectionEnd = cursorPositionBeforChange + 1;
+            }
           }
         });
-  
+
         if (this.properties.shift && this.properties.alt) {
           this.changeLang();
         }
-      } 
-
+      }
     });
     // when we stop pressing button
-    document.addEventListener('keyup', ({code}) => {
+    document.addEventListener('keyup', ({ code }) => {
       this.myFocus();
       // Conditional operator short form
       const keyCodes = this.elements.allKeyCodes;
       const lang = this.properties.langEng ? 0 : 1;
 
       //* if no key in keyCodes, do nothing
-      if(Object.prototype.hasOwnProperty.call(keyCodes, code)) {
+      if (Object.prototype.hasOwnProperty.call(keyCodes, code)) {
         keyBoardKeys.forEach((key) => {
           if (key.innerHTML.toLowerCase() === keyCodes[code][lang].toLowerCase()) {
             key.classList.remove('keyboard__key_clicked');
           }
-  
+
           if (key.innerHTML === 'AltL' || key.innerHTML === 'AltR') {
             this.properties.alt = false;
           }
-  
+
           if (key.innerHTML === 'ShiftR' || key.innerHTML === 'ShiftL') {
             this.properties.shift = false;
           }
         });
       }
-
     });
   },
 
@@ -227,9 +224,9 @@ const Keyboard = {
     const keys = this.elements.allKeyCodes;
     const lang = this.properties.langEng ? 0 : 1;
 
-    for (let code in keys) {
-      let key = keys[code][lang];
-      
+    for (const code in keys) {
+      const key = keys[code][lang];
+
       const keyButton = document.createElement('button');
 
       keyButton.setAttribute('type', 'button');
@@ -262,6 +259,7 @@ const Keyboard = {
             this.myFocus();
           });
           break;
+
         case 'Enter':
           keyButton.classList.add('keyboard__key_wide');
           keyButton.textContent = key;
@@ -287,20 +285,14 @@ const Keyboard = {
           break;
 
         case 'CtrlR':
-          keyButton.textContent = key;
-          break;
         case 'CtrlL':
-          keyButton.textContent = key;
-          break;
-
         case 'Win':
+        case 'AltL':
+        case 'AltR':
           keyButton.textContent = key;
           break;
 
         case 'ShiftR':
-          keyButton.classList.add('keyboard__key_wide');
-          keyButton.textContent = key;
-          break;
         case 'ShiftL':
           keyButton.classList.add('keyboard__key_wide');
           keyButton.textContent = key;
@@ -317,44 +309,15 @@ const Keyboard = {
           break;
 
         case '▲':
-          keyButton.textContent = key;
-          keyButton.addEventListener('click', () => {
-            this.properties.value += '▲';
-            this.triggerEvent();
-            this.myFocus();
-          });
-
-          break;
         case '◄':
-          keyButton.textContent = key;
-          keyButton.addEventListener('click', () => {
-            this.properties.value += '◄';
-            this.triggerEvent();
-            this.myFocus();
-          });
-          break;
         case '▼':
-          keyButton.textContent = key;
-          keyButton.addEventListener('click', () => {
-            this.properties.value += '▼';
-            this.triggerEvent();
-            this.myFocus();
-          });
-          break;
         case '►':
           keyButton.textContent = key;
           keyButton.addEventListener('click', () => {
-            this.properties.value += '►';
+            this.properties.value += key;
             this.triggerEvent();
             this.myFocus();
           });
-          break;
-
-        case 'AltL':
-          keyButton.textContent = 'AltL';
-          break;
-        case 'AltR':
-          keyButton.textContent = 'AltR';
           break;
 
         default:
@@ -385,7 +348,7 @@ const Keyboard = {
   toggleCapsLock() {
     const arr = document.querySelectorAll('.keyboard__key');
     this.properties.capsLock = !this.properties.capsLock;
-    sessionStorage.setItem('properties', JSON.stringify({capsLock: this.properties.capsLock, langEng: this.properties.langEng}));
+    sessionStorage.setItem('properties', JSON.stringify({ capsLock: this.properties.capsLock, langEng: this.properties.langEng }));
     for (let i = 0; i < arr.length; i += 1) {
       if (/^[a-zA-Zа-яА-Я]$/.test(arr[i].textContent)) {
         if (this.properties.capsLock === true) {
@@ -402,7 +365,7 @@ const Keyboard = {
     setTimeout(() => {
       this.deleteChild();
       this.properties.langEng = !this.properties.langEng;
-      sessionStorage.setItem('properties', JSON.stringify({capsLock: this.properties.capsLock, langEng: this.properties.langEng}));
+      sessionStorage.setItem('properties', JSON.stringify({ capsLock: this.properties.capsLock, langEng: this.properties.langEng }));
 
       this.createKeysAndListeners();
     }, 100);
