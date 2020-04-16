@@ -138,20 +138,20 @@ const Keyboard = {
 
     // when we press a button
     //* + use destructuring
-    document.addEventListener('keydown', ({ code }) => {
+    document.addEventListener('keydown', (event) => {
       this.myFocus();
 
       const keyCodes = this.elements.allKeyCodes;
       // conditional operator short form
       const lang = this.properties.langEng ? 0 : 1;
       //* if no key in keyCodes, do nothing
-      if (Object.prototype.hasOwnProperty.call(keyCodes, code)) {
+      if (keyCodes[event.code]) {
         keyBoardKeys.forEach((key) => {
           this.open(key.value, (currentValue) => {
             key.value = currentValue;
           });
 
-          if (key.innerHTML.toLowerCase() === keyCodes[code][lang].toLowerCase()) {
+          if (key.innerHTML.toLowerCase() === keyCodes[event.code][lang].toLowerCase()) {
             key.classList.add('keyboard__key_clicked');
 
             if (key.innerHTML === 'CapsLock') {
@@ -194,7 +194,7 @@ const Keyboard = {
       const lang = this.properties.langEng ? 0 : 1;
 
       //* if no key in keyCodes, do nothing
-      if (Object.prototype.hasOwnProperty.call(keyCodes, code)) {
+      if (keyCodes[code]) {
         keyBoardKeys.forEach((key) => {
           if (key.innerHTML.toLowerCase() === keyCodes[code][lang].toLowerCase()) {
             key.classList.remove('keyboard__key_clicked');
@@ -224,7 +224,7 @@ const Keyboard = {
     const keys = this.elements.allKeyCodes;
     const lang = this.properties.langEng ? 0 : 1;
 
-    for (const code in keys) {
+    Object.keys(keys).forEach((code) => {
       const key = keys[code][lang];
 
       const keyButton = document.createElement('button');
@@ -233,7 +233,7 @@ const Keyboard = {
       keyButton.classList.add('keyboard__key');
 
       keyButton.addEventListener('click', () => {
-        this.addClickedStyle(keyButton);
+        Keyboard.addClickedStyle(keyButton);
       });
 
       switch (key) {
@@ -242,10 +242,10 @@ const Keyboard = {
           keyButton.textContent = key;
 
           keyButton.addEventListener('click', () => {
-            this.properties.value = this.properties.value.substring(0,
-              this.properties.value.length - 1);
-            this.triggerEvent();
-            this.myFocus();
+            Keyboard.properties.value = Keyboard.properties.value.substring(0,
+              Keyboard.properties.value.length - 1);
+            Keyboard.triggerEvent();
+            Keyboard.myFocus();
           });
           break;
 
@@ -254,9 +254,9 @@ const Keyboard = {
           keyButton.textContent = key;
 
           keyButton.addEventListener('click', () => {
-            this.properties.value += '\t';
-            this.triggerEvent();
-            this.myFocus();
+            Keyboard.properties.value += '\t';
+            Keyboard.triggerEvent();
+            Keyboard.myFocus();
           });
           break;
 
@@ -265,21 +265,21 @@ const Keyboard = {
           keyButton.textContent = key;
 
           keyButton.addEventListener('click', () => {
-            this.properties.value += '\n';
-            this.triggerEvent();
-            this.myFocus();
+            Keyboard.properties.value += '\n';
+            Keyboard.triggerEvent();
+            Keyboard.myFocus();
           });
           break;
 
         case 'CapsLock':
           keyButton.classList.add('keyboard__key_wide', 'keyboard__key_activated');
           keyButton.textContent = key;
-          if (this.properties.capsLock) {
+          if (Keyboard.properties.capsLock) {
             keyButton.classList.toggle('keyboard__key_active');
           }
 
           keyButton.addEventListener('click', () => {
-            this.toggleCapsLock();
+            Keyboard.toggleCapsLock();
             keyButton.classList.toggle('keyboard__key_active');
           });
           break;
@@ -302,9 +302,9 @@ const Keyboard = {
           keyButton.classList.add('keyboard__key_extra-wide');
 
           keyButton.addEventListener('click', () => {
-            this.properties.value += ' ';
-            this.triggerEvent();
-            this.myFocus();
+            Keyboard.properties.value += ' ';
+            Keyboard.triggerEvent();
+            Keyboard.myFocus();
           });
           break;
 
@@ -314,24 +314,24 @@ const Keyboard = {
         case '►':
           keyButton.textContent = key;
           keyButton.addEventListener('click', () => {
-            this.properties.value += key;
-            this.triggerEvent();
-            this.myFocus();
+            Keyboard.properties.value += key;
+            Keyboard.triggerEvent();
+            Keyboard.myFocus();
           });
           break;
 
         default:
-          if (this.properties.capsLock) {
+          if (Keyboard.properties.capsLock) {
             keyButton.textContent = key.toUpperCase();
           } else {
             keyButton.textContent = key.toLowerCase();
           }
 
           keyButton.addEventListener('click', () => {
-            this.properties.value += this.properties.capsLock
+            Keyboard.properties.value += Keyboard.properties.capsLock
               ? key.toUpperCase() : key.toLowerCase();
-            this.triggerEvent();
-            this.myFocus();
+            Keyboard.triggerEvent();
+            Keyboard.myFocus();
           });
           break;
       }
@@ -340,7 +340,9 @@ const Keyboard = {
       if (key === 'Backspace' || key === 'Enter' || key === '\\' || key === 'ShiftR') {
         fragment.appendChild(document.createElement('br'));
       }
-    }
+    });
+
+
     return fragment;
   },
 
