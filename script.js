@@ -2,137 +2,70 @@ const Keyboard = {
   elements: {
     mainContainer: null,
     keysContainer: null,
-    keyCodesEng: {
-      Backquote: '`',
-      Digit1: '1',
-      Digit2: '2',
-      Digit3: '3',
-      Digit4: '4',
-      Digit5: '5',
-      Digit6: '6',
-      Digit7: '7',
-      Digit8: '8',
-      Digit9: '9',
-      Digit0: '0',
-      Minus: '-',
-      Equal: '=',
-      Backspace: 'Backspace',
-      Tab: 'Tab',
-      KeyQ: 'q',
-      KeyW: 'w',
-      KeyE: 'e',
-      KeyR: 'r',
-      KeyT: 't',
-      KeyY: 'y',
-      KeyU: 'u',
-      KeyI: 'i',
-      KeyO: 'o',
-      KeyP: 'p',
-      BracketLeft: '[',
-      BracketRight: ']',
-      Enter: 'Enter',
-      CapsLock: 'CapsLock',
-      KeyA: 'a',
-      KeyS: 's',
-      KeyD: 'd',
-      KeyF: 'f',
-      KeyG: 'g',
-      KeyH: 'h',
-      KeyJ: 'j',
-      KeyK: 'k',
-      KeyL: 'l',
-      Semicolon: ';',
-      Quote: "'",
-      Backslash: '\\',
-      ShiftLeft: 'ShiftL',
-      KeyZ: 'z',
-      KeyX: 'x',
-      KeyC: 'c',
-      KeyV: 'v',
-      KeyB: 'b',
-      KeyN: 'n',
-      KeyM: 'm',
-      Comma: ',',
-      Period: '.',
-      Slash: '/',
-      ArrowUp: '▲',
-      ShiftRight: 'ShiftR',
-      ControlLeft: 'CtrlL',
-      MetaLeft: 'Win',
-      AltLeft: 'AltL',
-      Space: '',
-      AltRight: 'AltR',
-      ControlRight: 'CtrlR',
-      ArrowLeft: '◄',
-      ArrowDown: '▼',
-      ArrowRight: '►',
-      
-    },
-
-    keyCodesRu: {
-      Backquote: '`',
-      Digit1: '1',
-      Digit2: '2',
-      Digit3: '3',
-      Digit4: '4',
-      Digit5: '5',
-      Digit6: '6',
-      Digit7: '7',
-      Digit8: '8',
-      Digit9: '9',
-      Digit0: '0',
-      Minus: '-',
-      Equal: '=',
-      Backspace: 'Backspace',
-      Tab: 'Tab',
-      KeyQ: 'й',
-      KeyW: 'ц',
-      KeyE: 'у',
-      KeyR: 'к',
-      KeyT: 'е',
-      KeyY: 'н',
-      KeyU: 'г',
-      KeyI: 'ш',
-      KeyO: 'щ',
-      KeyP: 'з',
-      BracketLeft: '[',
-      BracketRight: ']',
-      Enter: 'Enter',
-      CapsLock: 'CapsLock',
-      KeyA: 'ф',
-      KeyS: 'ы',
-      KeyD: 'в',
-      KeyF: 'а',
-      KeyG: 'п',
-      KeyH: 'р',
-      KeyJ: 'о',
-      KeyK: 'л',
-      KeyL: 'д',
-      Semicolon: ';',
-      Quote: "'",
-      Backslash: '\\',
-      ShiftLeft: 'ShiftL',
-      KeyZ: 'я',
-      KeyX: 'ч',
-      KeyC: 'с',
-      KeyV: 'м',
-      KeyB: 'и',
-      KeyN: 'т',
-      KeyM: 'ь',
-      Comma: ',',
-      Period: '.',
-      Slash: '/',
-      ArrowUp: '▲',
-      ShiftRight: 'ShiftR',
-      ControlLeft: 'CtrlL',
-      MetaLeft: 'Win',
-      AltLeft: 'AltL',
-      Space: '',
-      AltRight: 'AltR',
-      ControlRight: 'CtrlR',
-      ArrowLeft: '◄',
-      ArrowDown: '▼',
-      ArrowRight: '►',
+    allKeyCodes: {
+      Backquote: ['`', '`'],
+      Digit1: ['1', '1'],
+      Digit2: ['2', '2'],
+      Digit3: ['3', '3'],
+      Digit4: ['4', '4'],
+      Digit5: ['5', '5'],
+      Digit6: ['6', '6'],
+      Digit7: ['7', '7'],
+      Digit8: ['8', '8'],
+      Digit9: ['9', '9'],
+      Digit0: ['0', '0'],
+      Minus: ['-','-'],
+      Equal: ['=','='],
+      Backspace: ['Backspace', 'Backspace'],
+      Tab: ['Tab', 'Tab'],
+      KeyQ: ['q', 'й'],
+      KeyW: ['w', 'ц'],
+      KeyE: ['e', 'у'],
+      KeyR: ['r', 'к'],
+      KeyT: ['t', 'е'],
+      KeyY: ['y', 'н'],
+      KeyU: ['u', 'г'],
+      KeyI: ['i', 'ш'],
+      KeyO: ['o', 'щ'],
+      KeyP: ['p', 'з'],
+      BracketLeft: ['[', 'х'],
+      BracketRight: [']', 'ъ'],
+      Enter: ['Enter', 'Enter'],
+      CapsLock: ['CapsLock', 'CapsLock'],
+      KeyA: ['a', 'ф'],
+      KeyS: ['s', 'ы'],
+      KeyD: ['d', 'в'],
+      KeyF: ['f', 'а'],
+      KeyG: ['g', 'п'],
+      KeyH: ['h', 'р'],
+      KeyJ: ['j', 'о'],
+      KeyK: ['k', 'л'],
+      KeyL: ['l', 'д'],
+      Semicolon: [';','ж'],
+      Quote: ["'","э"],
+      Backslash: ['\\','\\'],
+      ShiftLeft: ['ShiftL','ShiftL'],
+      KeyZ: ['z', 'я'],
+      KeyX: ['x', 'ч'],
+      KeyC: ['c', 'с'],
+      KeyV: ['v', 'м'],
+      KeyB: ['b', 'и'],
+      KeyN: ['n', 'т'],
+      KeyM: ['m', 'ь'],
+      Comma: [',', 'б'],
+      Period: ['.','ю'],
+      Slash: ['/', '/'],
+      ArrowUp: ['▲','▲'],
+      ShiftRight: ['ShiftR', 'ShiftR'],
+      ControlLeft: ['CtrlL', 'CtrlL'],
+      MetaLeft: ['Win','Win'],
+      AltLeft: ['AltL','AltL'],
+      Space: ['',''],
+      AltRight: ['AltR', 'AltR'],
+      ControlRight: ['CtrlR', 'CtrlR'],
+      ArrowLeft: ['◄', '◄'],
+      ArrowDown: ['▼', '▼'],
+      ArrowRight: ['►', '►'],
       
     }
   },
@@ -208,17 +141,18 @@ const Keyboard = {
     //* + use destructuring
     document.addEventListener('keydown', ({code}) => {
       this.myFocus();
+      
+      const keyCodes = this.elements.allKeyCodes;
       //conditional operator short form
-      const keyCodes = this.properties.langEng ? this.elements.keyCodesEng : this.elements.keyCodesRu;
-
+      const lang = this.properties.langEng ? 0 : 1;
       //* if no key in keyCodes, do nothing
       if(Object.prototype.hasOwnProperty.call(keyCodes, code)) {
         keyBoardKeys.forEach((key) => {
           this.open(key.value, (currentValue) => {
             key.value = currentValue;
           });
-  
-          if (key.innerHTML.toLowerCase() === keyCodes[code].toLowerCase()) {
+
+          if (key.innerHTML.toLowerCase() === keyCodes[code][lang].toLowerCase()) {
             key.classList.add('keyboard__key_clicked');
   
             if (key.innerHTML === 'CapsLock') {
@@ -258,12 +192,13 @@ const Keyboard = {
     document.addEventListener('keyup', ({code}) => {
       this.myFocus();
       // Conditional operator short form
-      const keyCodes = this.properties.langEng ? this.elements.keyCodesEng : this.elements.keyCodesRu;
+      const keyCodes = this.elements.allKeyCodes;
+      const lang = this.properties.langEng ? 0 : 1;
 
       //* if no key in keyCodes, do nothing
       if(Object.prototype.hasOwnProperty.call(keyCodes, code)) {
         keyBoardKeys.forEach((key) => {
-          if (key.innerHTML.toLowerCase() === keyCodes[code].toLowerCase()) {
+          if (key.innerHTML.toLowerCase() === keyCodes[code][lang].toLowerCase()) {
             key.classList.remove('keyboard__key_clicked');
           }
   
@@ -289,10 +224,11 @@ const Keyboard = {
   //* Create buttons
   createKeys() {
     const fragment = document.createDocumentFragment();
-    const keys = this.properties.langEng ? this.elements.keyCodesEng : this.elements.keyCodesRu;
+    const keys = this.elements.allKeyCodes;
+    const lang = this.properties.langEng ? 0 : 1;
 
     for (let code in keys) {
-      let key = keys[code];
+      let key = keys[code][lang];
       
       const keyButton = document.createElement('button');
 
